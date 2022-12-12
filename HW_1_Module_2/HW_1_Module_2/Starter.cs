@@ -2,7 +2,7 @@
 {
     static class Starter
     {
-        private const string FilePat = "log.tht";
+        private const string FilePath = "log.txt";
 
         private static readonly Logger _logger;
 
@@ -36,7 +36,7 @@
                 }
             }
 
-            File.WriteAllText(FilePat, _logger.AllLogs);
+            File.WriteAllText(FilePath, _logger.AllLogs);
         }
     }
 }
