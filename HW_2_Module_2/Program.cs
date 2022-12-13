@@ -42,6 +42,7 @@ namespace HW2Module2.GadgetStore
                 Console.WriteLine("How many products do you want to cancel: ");
                 var productsQuantityForCancel = Convert.ToInt32(Console.ReadLine());
 
+                
                 for (int i = 0; i < productsQuantityForCancel; i++)
                 {
                     Console.WriteLine("Input item Id: ");

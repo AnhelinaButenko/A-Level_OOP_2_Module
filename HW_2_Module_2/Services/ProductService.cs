@@ -41,29 +41,27 @@
                 _basket.Add(selectedProduct.Id, selectedProduct);
             }
 
-            //var productsInBasket = new List<Product>();
-
-            //foreach (var item in productsIdsInBasket)
-            //{
-            //    Product selectedProduct = _products.First(x => x.Id == item.Key);
-            //    selectedProduct.Quantity = item.Value;
-            //    productsInBasket.Add(selectedProduct);
-            //}
-
             _notificationService.Notify(_basket.Values.ToList());
             return _basket.Values.ToList();
         }
 
-        public List<Product> ReturnProducts(Dictionary<int, int> productsinBasketUpdate)
+        public void ReturnProducts(Dictionary<int, int> productsinBasketUpdate)
         {
             foreach (var item in productsinBasketUpdate)
             {
-                Product selectedProduct = _products.First(x => x.Id == item.Key);
-                selectedProduct.Quantity -= item.Value;
-            }
+                Product selectedProduct = _basket[item.Key]; 
+
+                if (item.Value > selectedProduct.Quantity)
+                {
+                    _notificationService.NotifyError(selectedProduct);
+                }
+                else
+                {
+                    selectedProduct.Quantity = selectedProduct.Quantity - item.Value;
+                }
+            }          
 
             _notificationService.Notify(_basket.Values.ToList());
-            return _basket.Values.ToList();
         }
     }
 }

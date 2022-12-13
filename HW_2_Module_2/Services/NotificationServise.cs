@@ -33,6 +33,10 @@ namespace HW2Module2.GadgetStore
 
             return specialNumber;
         }
-        
+
+        public void NotifyError(Product product)
+        {
+            Console.WriteLine($"There are more items to delete than there are in the basket Id: {product.Id} {product.Model}");
+        }
     }
 }
