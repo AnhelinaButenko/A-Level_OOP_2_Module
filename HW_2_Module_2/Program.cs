@@ -16,47 +16,30 @@ namespace HW2Module2.GadgetStore
             }
 
             Console.WriteLine("How many products do you want to buy: ");
-            var productsQuantity = Convert.ToInt32(Console.ReadLine());
 
-            var productsInBasket = new Dictionary<int, int>();
+            var userInput = GetProductsinBasket();
 
-            for (int i = 0; i < productsQuantity; i++)
-            {
-                Console.WriteLine("Input item Id: ");
-                var id = Convert.ToInt32(Console.ReadLine());
-                Console.WriteLine("Input quantity: ");
-                var quantity = Convert.ToInt32(Console.ReadLine());
-
-                productsInBasket.Add(id, quantity);
-            }
-
-            productService.SelectProducts(productsInBasket);
+            productService.SelectProducts(userInput);
 
             Console.WriteLine("Do you want to remove something from the cart? Please, input yes or not. ");
             string option = Console.ReadLine();
 
             if (option == "yes")
             {
-                var productsinBasketUpdate = new Dictionary<int, int>();
-
                 Console.WriteLine("How many products do you want to cancel: ");
-                var productsQuantityForCancel = Convert.ToInt32(Console.ReadLine());
 
-                
-                for (int i = 0; i < productsQuantityForCancel; i++)
-                {
-                    Console.WriteLine("Input item Id: ");
-                    var id = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Input quantity: ");
-                    var quantity = Convert.ToInt32(Console.ReadLine());
+                var userInputForUpdate = GetProductsinBasket();
 
-                    productsinBasketUpdate.Add(id, quantity);
-                }
-
-                productService.ReturnProducts(productsinBasketUpdate);  
+                productService.ReturnProducts(userInputForUpdate);  
             }
 
-            
+            NotificationService notificationService = new NotificationService();
+
+            notificationService.Notify(GetInfoUser());
+        }
+
+        public static UserInformation GetInfoUser()
+        {
             Console.WriteLine($"Your data: ");
 
             Console.WriteLine($"Enter name: ");
@@ -83,9 +66,25 @@ namespace HW2Module2.GadgetStore
                 Phone = phone
             };
 
-            NotificationService notificationService = new NotificationService();
+            return userInformation;
+        }
 
-            notificationService.Notify(userInformation);
+        public static Dictionary<int, int> GetProductsinBasket()
+        {
+            var productsinBasket = new Dictionary<int, int>();
+            int productsQuantity = Convert.ToInt32(Console.ReadLine());
+
+            for (int i = 0; i < productsQuantity; i++)
+            {
+                Console.WriteLine("Input item Id: ");
+                int productid = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine("Input quantity: ");
+                int quantity = Convert.ToInt32(Console.ReadLine());
+
+                productsinBasket.Add(productid, quantity);
+            }
+
+            return productsinBasket;
         }
     }
 }
