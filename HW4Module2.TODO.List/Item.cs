@@ -8,11 +8,20 @@ public class Item
     public DateTime FulfillmentTime { get; set; }
 }
 
-public class RepetitionTypes
+public static class RepetitionTypes
 {
     public const string Daily = "Daily";
     public const string Weekly = "Weekly";
     public const string Monthly = "Monthly";
     public const string Yearly = "Yearly";
+
+
+    public static bool VerifyRepetitionType(string type)
+    {
+        return string.Equals(Daily, type, StringComparison.InvariantCultureIgnoreCase) 
+           || string.Equals(Weekly, type, StringComparison.InvariantCultureIgnoreCase)
+           || string.Equals(Monthly, type, StringComparison.InvariantCultureIgnoreCase)
+           || string.Equals(Yearly, type, StringComparison.InvariantCultureIgnoreCase);
+    }
 }
 

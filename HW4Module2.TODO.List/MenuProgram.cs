@@ -63,26 +63,12 @@ public class MenuProgram
                 DateTime timeReminderRc = Convert.ToDateTime(Console.ReadLine());
                 Console.WriteLine("Input repetition type: Daily, Weekly, Monthly or Yearly");
                 string repetitionType = Helpers.GetValidStringValue();
-
-                switch (repetitionType)
+                
+                if (RepetitionTypes.VerifyRepetitionType(repetitionType))
                 {
-                    case RepetitionTypes.Daily:
-                        repetitionType = RepetitionTypes.Daily;
-                        itemService.Add(taskNameAddReminderRc, timeReminderRc, repetitionType);
-                        break;
-                    case RepetitionTypes.Weekly:
-                        repetitionType = RepetitionTypes.Weekly;
-                        itemService.Add(taskNameAddReminderRc, timeReminderRc, repetitionType);
-                        break;
-                    case RepetitionTypes.Monthly:
-                        repetitionType = RepetitionTypes.Monthly;
-                        itemService.Add(taskNameAddReminderRc, timeReminderRc, repetitionType);
-                        break;
-                    case RepetitionTypes.Yearly:
-                        repetitionType = RepetitionTypes.Yearly;
-                        itemService.Add(taskNameAddReminderRc, timeReminderRc, repetitionType);
-                        break;
+                    itemService.Add(taskNameAddReminderRc, timeReminderRc, repetitionType);
                 }
+
                 break;
 
             default:
@@ -102,17 +88,29 @@ public class MenuProgram
                 break;
 
             case "Remove":
-                Console.WriteLine($"Input numer Id for Remove: ");
+                Console.WriteLine($"Input number Id for Remove: ");
                 int removeNumberId = Helpers.GetValidValueWholeNumber();
                 itemService.Remove(removeNumberId);
                 Back();
                 break;
 
             case "Update":
-                Console.WriteLine($"Input numer Id for Update: ");
+                Console.WriteLine($"Input item Id for Update: ");
                 int updateNumberId = Helpers.GetValidValueWholeNumber();
-                Console.WriteLine($"Input new Item for Update: ");
-                var newItem = new Item();
+
+                // call service to check if the item wit provided Id exists
+
+                Console.WriteLine($"Input item name for Update: ");
+                string name = Console.ReadLine();
+                // the same for reminder and repetition type
+
+                //Console.WriteLine("Do you want to update the");
+
+                var newItem = new Item 
+                {
+                    Name = name,
+                    // the same for reminder and repetition type
+                };
                 itemService.Update(updateNumberId, newItem);
                 Back();
                 break;
@@ -129,7 +127,7 @@ public class MenuProgram
                 return;
 
             case "Exit":
-                System.Environment.Exit(0);
+                Environment.Exit(0);
                 break;
             default:
                 break;

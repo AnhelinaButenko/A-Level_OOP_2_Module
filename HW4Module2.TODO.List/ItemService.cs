@@ -76,14 +76,14 @@ public class ItemService : IItemService
 
     public void Remove(int id)
     {
-        Item itemFotRemove = _tasks.FirstOrDefault(x => x.Id == id);
+        Item itemForRemove = _tasks.FirstOrDefault(x => x.Id == id);
 
-        if (itemFotRemove == null)
+        if (itemForRemove == null)
         {
             return;
         }
 
-        _tasks.Remove(itemFotRemove);
+        _tasks.Remove(itemForRemove);
     }
 
     public List<Item> GetAll()
@@ -93,18 +93,19 @@ public class ItemService : IItemService
 
     public Item Update(int id, Item newItem)
     {
-        Item itemFotUpdate = _tasks.FirstOrDefault(x => x.Id == id);
+        Item itemForUpdate = _tasks.FirstOrDefault(x => x.Id == id);
 
-        if (itemFotUpdate == null)
+        if (itemForUpdate == null)
         {
+            // throw exception - no item for this Id found
             return newItem;
         }
 
-        itemFotUpdate.Name = newItem.Name;
-        itemFotUpdate.TaskRepetitionType = newItem.TaskRepetitionType;
-        itemFotUpdate.FulfillmentTime = newItem.FulfillmentTime;
+        itemForUpdate.Name = newItem.Name;
+        itemForUpdate.TaskRepetitionType = newItem.TaskRepetitionType;
+        itemForUpdate.FulfillmentTime = newItem.FulfillmentTime;
 
-        return itemFotUpdate;
+        return itemForUpdate;
     }
 
     public bool Any() => _tasks.Any();
