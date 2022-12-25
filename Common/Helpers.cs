@@ -1,4 +1,4 @@
-﻿namespace HW4Module2.TODO.List;
+﻿namespace Common;
 
 public class Helpers
 {
@@ -36,5 +36,19 @@ public class Helpers
             parseResult = string.IsNullOrEmpty(parametr);
         }
         return parametr;
+    }
+
+    public static DateTime GetValidDateTimeValue()
+    {
+        string stringOpinion = Console.ReadLine();
+        DateTime option;
+        bool parseResult = DateTime.TryParse(stringOpinion, out option);
+
+        while (!parseResult)
+        {
+            Console.WriteLine("Incorrect Input. Please type only numbers. Letters and signs are prohibited!");
+            parseResult = DateTime.TryParse(Console.ReadLine(), out option);
+        }
+        return option;
     }
 }

@@ -1,4 +1,7 @@
-﻿namespace HW4Module2.TODO.List;
+﻿
+using Common;
+
+namespace HW4Module2.TODO.List;
 
 public class MenuProgram
 {
@@ -52,7 +55,7 @@ public class MenuProgram
                 Console.WriteLine($"Input task name for Add-reminder: ");
                 string taskNameAddReminder = Helpers.GetValidStringValue();
                 Console.WriteLine($"Input task time: ");
-                DateTime timeReminder = Convert.ToDateTime(Console.ReadLine());
+                DateTime timeReminder = Helpers.GetValidDateTimeValue();
                 itemService.Add(taskNameAddReminder, timeReminder);
                 break;
 
@@ -60,7 +63,7 @@ public class MenuProgram
                 Console.WriteLine($"Input task name for Add-reminder-rc: ");
                 string taskNameAddReminderRc = Helpers.GetValidStringValue();
                 Console.WriteLine($"Input task time: ");
-                DateTime timeReminderRc = Convert.ToDateTime(Console.ReadLine());
+                DateTime timeReminderRc = Helpers.GetValidDateTimeValue();
                 Console.WriteLine("Input repetition type: Daily, Weekly, Monthly or Yearly");
                 string repetitionType = Helpers.GetValidStringValue();
                 
@@ -68,7 +71,6 @@ public class MenuProgram
                 {
                     itemService.Add(taskNameAddReminderRc, timeReminderRc, repetitionType);
                 }
-
                 break;
 
             default:
@@ -98,20 +100,29 @@ public class MenuProgram
                 Console.WriteLine($"Input item Id for Update: ");
                 int updateNumberId = Helpers.GetValidValueWholeNumber();
 
-                // call service to check if the item wit provided Id exists
-
-                Console.WriteLine($"Input item name for Update: ");
-                string name = Console.ReadLine();
-                // the same for reminder and repetition type
-
-                //Console.WriteLine("Do you want to update the");
-
+                Console.WriteLine($"Input task name for Update: ");
+                string name = Helpers.GetValidStringValue();
+                Console.WriteLine($"Input task time for Update: ");
+                string taskRepetitionType = Helpers.GetValidStringValue();               
+                Console.WriteLine($"Input repetition type for Update: Daily, Weekly, Monthly or Yearly ");
+                DateTime fulfillmentTime = Helpers.GetValidDateTimeValue();                            
+                
                 var newItem = new Item 
                 {
                     Name = name,
-                    // the same for reminder and repetition type
+                    TaskRepetitionType = taskRepetitionType,
+                    FulfillmentTime = fulfillmentTime                   
                 };
-                itemService.Update(updateNumberId, newItem);
+
+                if (RepetitionTypes.VerifyRepetitionType(taskRepetitionType))
+                {
+                    itemService.Update(updateNumberId, newItem);
+                }
+                else
+                {
+                    Console.WriteLine("Mistake!");
+                }
+                
                 Back();
                 break;
 
@@ -120,7 +131,7 @@ public class MenuProgram
 
                 foreach (var item in items)
                 {
-                    Console.WriteLine($"{ item.Id},{ item.Name},{ item.TaskRepetitionType},{item.FulfillmentTime}");
+                    Console.WriteLine($"{item.Id} {item.Name} {item.FulfillmentTime} {item.TaskRepetitionType}");        
                 }  
                 
                 Back();
