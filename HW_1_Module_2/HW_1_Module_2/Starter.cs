@@ -1,14 +1,16 @@
-﻿namespace HW_1_Module_2
+﻿using Common;
+
+namespace HW_1_Module_2
 {
     static class Starter
     {
         private const string FilePath = "log.txt";
-
-        private static readonly Logger _logger;
+         
+        private static readonly FileLogger _logger;
 
         static Starter()
         {
-            _logger = Logger.Instance;
+            _logger = FileLogger.Instance;
         }
         public static void Run()
         {
@@ -35,7 +37,6 @@
                     _logger.LogError($"Action failed by a reason: {result.ErrorMessage}");
                 }
             }
-
             File.WriteAllText(FilePath, _logger.AllLogs);
         }
     }

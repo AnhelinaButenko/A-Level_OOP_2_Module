@@ -1,10 +1,17 @@
-﻿
-using Common;
+﻿using Common;
+using HW_1_Module_2;
 
 namespace HW4Module2.TODO.List;
 
 public class MenuProgram
 {
+    private static FileLogger _logger;
+
+    public MenuProgram()
+    {
+        _logger = FileLogger.Instance;
+    }
+
     public static void BuildMenuOperation()
     {
         IItemService itemService = new ItemService();
@@ -29,7 +36,8 @@ public class MenuProgram
     public static void Back()
     {
         BuildMenuOperation();
-        string operationSelectionOption = Helpers.GetValidStringValue();           
+        string operationSelectionOption = Helpers.GetValidStringValue();
+        _logger.LogInfo($"This operation was selected by the user {operationSelectionOption}");
         HandleUserChoise(operationSelectionOption);
     }
 
@@ -42,12 +50,13 @@ public class MenuProgram
         Console.WriteLine("Add-reminder");
         Console.WriteLine("Add-reminder-rc");
         string optionChoice = Helpers.GetValidStringValue();
+        _logger.LogInfo($"This operation for add was selected by the user {optionChoice}");
 
         switch (optionChoice)
         {
             case "Add":
                 Console.WriteLine($"Input task name for Add: ");
-                string taskNameAdd = Helpers.GetValidStringValue();
+                string taskNameAdd = Helpers.GetValidStringValue();                
                 itemService.Add(taskNameAdd);
                 break;
 
@@ -65,11 +74,14 @@ public class MenuProgram
                 Console.WriteLine($"Input task time: ");
                 DateTime timeReminderRc = Helpers.GetValidDateTimeValue();
                 Console.WriteLine("Input repetition type: Daily, Weekly, Monthly or Yearly");
-                string repetitionType = Helpers.GetValidStringValue();
-                
+                string repetitionType = Helpers.GetValidStringValue();;
                 if (RepetitionTypes.VerifyRepetitionType(repetitionType))
                 {
                     itemService.Add(taskNameAddReminderRc, timeReminderRc, repetitionType);
+                }
+                else
+                {
+                    _logger.LogError($"Wrong repetition Type {repetitionType}");
                 }
                 break;
 
@@ -120,6 +132,7 @@ public class MenuProgram
                 }
                 else
                 {
+                    _logger.LogError($"Wrong answer entered {operationSelectionOption}");
                     Console.WriteLine("Mistake!");
                 }
                 
