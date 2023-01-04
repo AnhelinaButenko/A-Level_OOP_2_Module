@@ -1,7 +1,6 @@
 ﻿using System.Text;
-using Common;
 
-namespace HW_1_Module_2;
+namespace Common;
 
 public enum LogType
 {
@@ -10,7 +9,7 @@ public enum LogType
     Error
 }
 
-public class FileLogger : ILogger
+public class FileLogger : IFileLogger
 {
     private static readonly FileLogger _instance = new FileLogger();
     private readonly StringBuilder _allLogs;
@@ -26,7 +25,7 @@ public class FileLogger : ILogger
 
     private void Log(LogType type, string message)
     {
-        string log = $"{DateTime.UtcNow} : {type.ToString()} : {message}";
+        string log = $"{type.ToString()} : {message}";
         _allLogs.AppendLine(log);
         Console.WriteLine(log);
     }
@@ -44,6 +43,13 @@ public class FileLogger : ILogger
     public void LogError(string message ) 
     {
         Log(LogType.Error, message);
+    }
+
+    public void WriteLogs()
+    {
+        string dateStr = DateTime.Now.ToString("MM/dd/yyyy HH:mm:ss");
+        string filePath = $"{dateStr}log.txt";
+        File.WriteAllText(filePath, AllLogs);
     }
 }
 

@@ -1,5 +1,4 @@
 ﻿using Common;
-using HW_1_Module_2;
 
 namespace HW4Module2.TODO.List;
 
@@ -93,7 +92,8 @@ public class MenuProgram
     public static void HandleUserChoise(string operationSelectionOption)
     {
         IItemService itemService = new ItemService();
-
+        IFileLogger fileLogger = FileLogger.Instance;
+        
         switch (operationSelectionOption)
         {
             case "Add":
@@ -151,6 +151,8 @@ public class MenuProgram
                 return;
 
             case "Exit":
+                fileLogger.WriteLogs();
+                ConsoleLogger consoleLogger = new ConsoleLogger();
                 Environment.Exit(0);
                 break;
             default:

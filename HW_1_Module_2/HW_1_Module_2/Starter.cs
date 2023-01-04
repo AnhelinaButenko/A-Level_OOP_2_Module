@@ -4,7 +4,7 @@ namespace HW_1_Module_2
 {
     static class Starter
     {
-        private const string FilePath = "log.txt";
+        //private const string FilePath = "log.txt";
          
         private static readonly FileLogger _logger;
 
@@ -37,7 +37,7 @@ namespace HW_1_Module_2
                     _logger.LogError($"Action failed by a reason: {result.ErrorMessage}");
                 }
             }
-            File.WriteAllText(FilePath, _logger.AllLogs);
+            //File.WriteAllText(FilePath, _logger.AllLogs);
         }
     }
 }

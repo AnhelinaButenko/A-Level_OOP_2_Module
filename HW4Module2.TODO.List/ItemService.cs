@@ -1,5 +1,4 @@
 ﻿using Common;
-using HW_1_Module_2;
 using System.Net;
 
 namespace HW4Module2.TODO.List;
@@ -16,7 +15,7 @@ public interface IItemService
 
 public class ItemService : IItemService
 {
-    private readonly List<Item> _tasks = new List<Item>();
+    private static readonly List<Item> _tasks = new List<Item>();
 
     private FileLogger _logger;
 
@@ -49,17 +48,6 @@ public class ItemService : IItemService
         }
 
         _logger.LogInfo($"Item with {newItem} was added");
-    }
-    public class OutOfRangeForTasksException : Exception
-    {
-        public int LowerBound => 0;
-        public int UpperBound => 3;
-        public override string Message => "Task outside of bounds";
-        public override Dictionary<string, int> Data => new Dictionary<string, int>
-        {
-            { nameof(LowerBound), LowerBound },
-            { nameof(UpperBound), UpperBound }
-        };
     }
     
     public void Add(string name, DateTime timeForFulfillment)
