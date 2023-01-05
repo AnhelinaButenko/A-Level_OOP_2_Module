@@ -1,20 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace Common;
 
-public class ConsoleLogger
+public class ConsoleLogger : ILogger
 {
-    public class FileLogger : ILogger
+    private static readonly ConsoleLogger _instance = new ConsoleLogger();
+    private readonly StringBuilder _allLogs;
+
+    private ConsoleLogger()
     {
-        private static readonly FileLogger _instance = new FileLogger();
+        _allLogs = new StringBuilder();
+    }
 
-        public static FileLogger Instance => _instance;
+    public static ConsoleLogger Instance => _instance;
 
-        private void Log(LogType type, string message)
+    public string AllLogs => _allLogs.ToString();
+
+    private void Log(LogType type, string message)
         {
             string log = $"{type.ToString()} : {message}";
             Console.WriteLine(log);
@@ -34,5 +36,5 @@ public class ConsoleLogger
         {
             Log(LogType.Error, message);
         }          
-    }
+    
 }

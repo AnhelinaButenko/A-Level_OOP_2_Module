@@ -4,15 +4,25 @@ namespace HW4Module2.TODO.List;
 
 public class MenuProgram
 {
-    private static FileLogger _logger;
+    private static IFileLogger _logger;
+    private static ILogger _consoleLogger;
 
     public MenuProgram()
     {
         _logger = FileLogger.Instance;
+        _consoleLogger = ConsoleLogger.Instance;
     }
 
     public static void BuildMenuOperation()
     {
+        _logger = FileLogger.Instance;
+        _consoleLogger = ConsoleLogger.Instance;
+
+        //string userSearilization = "json";
+        //UserSeializationSetting.Setting = userSearilization;
+        //_logger.LogInfo("Test log");
+        //_logger.WriteLogs();
+
         IItemService itemService = new ItemService();
 
         bool hasElement = itemService.Any();
@@ -29,14 +39,16 @@ public class MenuProgram
             Console.WriteLine("Update");
             Console.WriteLine("Get All");
             Console.WriteLine("Exit");
-        }           
+        }
     }
 
     public static void Back()
     {
         BuildMenuOperation();
         string operationSelectionOption = Helpers.GetValidStringValue();
-        _logger.LogInfo($"This operation was selected by the user {operationSelectionOption}");
+        var info = $"This operation was selected by the user {operationSelectionOption}";
+        _logger.LogInfo(info);
+        _consoleLogger.LogInfo(info);
         HandleUserChoise(operationSelectionOption);
     }
 
@@ -49,7 +61,9 @@ public class MenuProgram
         Console.WriteLine("Add-reminder");
         Console.WriteLine("Add-reminder-rc");
         string optionChoice = Helpers.GetValidStringValue();
-        _logger.LogInfo($"This operation for add was selected by the user {optionChoice}");
+        var info = $"This operation for add was selected by the user {optionChoice}";
+        _logger.LogInfo(info);
+        _consoleLogger.LogInfo(info);
 
         switch (optionChoice)
         {
@@ -80,7 +94,9 @@ public class MenuProgram
                 }
                 else
                 {
-                    _logger.LogError($"Wrong repetition Type {repetitionType}");
+                    var error = $"Wrong repetition Type {repetitionType}";
+                    _logger.LogError(error);
+                    _consoleLogger.LogError(error);
                 }
                 break;
 
@@ -92,7 +108,7 @@ public class MenuProgram
     public static void HandleUserChoise(string operationSelectionOption)
     {
         IItemService itemService = new ItemService();
-        IFileLogger fileLogger = FileLogger.Instance;
+
         
         switch (operationSelectionOption)
         {
@@ -132,7 +148,9 @@ public class MenuProgram
                 }
                 else
                 {
-                    _logger.LogError($"Wrong answer entered {operationSelectionOption}");
+                    var error = $"Wrong answer entered {operationSelectionOption}";
+                    _consoleLogger.LogError(error);
+                    _logger.LogError(error);
                     Console.WriteLine("Mistake!");
                 }
                 
@@ -151,8 +169,11 @@ public class MenuProgram
                 return;
 
             case "Exit":
-                fileLogger.WriteLogs();
-                ConsoleLogger consoleLogger = new ConsoleLogger();
+                Console.WriteLine("Please choice and input format xml or json");
+                string userSearilization = Helpers.GetValidStringValue().ToLower();
+                UserSeializationSetting.Setting = userSearilization;
+                _logger.WriteLogs();               
+
                 Environment.Exit(0);
                 break;
             default:
