@@ -138,4 +138,3 @@ public class MyCollectionEnumerator<T> : IEnumerator<T>
 
     public void Reset() => _index = -1;
 }
-}
