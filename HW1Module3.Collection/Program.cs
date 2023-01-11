@@ -12,6 +12,7 @@ public class Program
             17,
         };
 
+
         myCollection.Add(1);
         myCollection.AddRange(new List<int> { 7, 8, 6 });
 
