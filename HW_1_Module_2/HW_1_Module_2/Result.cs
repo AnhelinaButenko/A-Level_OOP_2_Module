@@ -1,4 +1,6 @@
-﻿namespace HW_1_Module_2
+﻿using Common;
+
+namespace HW_1_Module_2
 {
     public struct Result
     {

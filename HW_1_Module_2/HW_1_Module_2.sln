@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HW3Module2.Salads", "..\HW3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HW4Module2.TODO.List", "..\HW4Module2.TODO.List\HW4Module2.TODO.List.csproj", "{F2D7A5D5-EF3A-4E2A-89EC-3726CABA87D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "..\Common\Common.csproj", "{375C810A-A58D-4165-9C8B-E357FF5C184E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "..\Common\Common.csproj", "{375C810A-A58D-4165-9C8B-E357FF5C184E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HW1Module3.Collection", "..\HW1Module3.Collection\HW1Module3.Collection.csproj", "{EB80A4E8-3C7F-4211-99D9-DF8D017E363C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{375C810A-A58D-4165-9C8B-E357FF5C184E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{375C810A-A58D-4165-9C8B-E357FF5C184E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{375C810A-A58D-4165-9C8B-E357FF5C184E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB80A4E8-3C7F-4211-99D9-DF8D017E363C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB80A4E8-3C7F-4211-99D9-DF8D017E363C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB80A4E8-3C7F-4211-99D9-DF8D017E363C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB80A4E8-3C7F-4211-99D9-DF8D017E363C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

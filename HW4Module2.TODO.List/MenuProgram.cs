@@ -1,12 +1,28 @@
-﻿
-using Common;
+﻿using Common;
 
 namespace HW4Module2.TODO.List;
 
 public class MenuProgram
 {
+    private static IFileLogger _logger;
+    private static ILogger _consoleLogger;
+
+    public MenuProgram()
+    {
+        _logger = FileLogger.Instance;
+        _consoleLogger = ConsoleLogger.Instance;
+    }
+
     public static void BuildMenuOperation()
     {
+        _logger = FileLogger.Instance;
+        _consoleLogger = ConsoleLogger.Instance;
+
+        //string userSearilization = "json";
+        //UserSeializationSetting.Setting = userSearilization;
+        //_logger.LogInfo("Test log");
+        //_logger.WriteLogs();
+
         IItemService itemService = new ItemService();
 
         bool hasElement = itemService.Any();
@@ -23,13 +39,16 @@ public class MenuProgram
             Console.WriteLine("Update");
             Console.WriteLine("Get All");
             Console.WriteLine("Exit");
-        }           
+        }
     }
 
     public static void Back()
     {
         BuildMenuOperation();
-        string operationSelectionOption = Helpers.GetValidStringValue();           
+        string operationSelectionOption = Helpers.GetValidStringValue();
+        var info = $"This operation was selected by the user {operationSelectionOption}";
+        _logger.LogInfo(info);
+        _consoleLogger.LogInfo(info);
         HandleUserChoise(operationSelectionOption);
     }
 
@@ -42,12 +61,15 @@ public class MenuProgram
         Console.WriteLine("Add-reminder");
         Console.WriteLine("Add-reminder-rc");
         string optionChoice = Helpers.GetValidStringValue();
+        var info = $"This operation for add was selected by the user {optionChoice}";
+        _logger.LogInfo(info);
+        _consoleLogger.LogInfo(info);
 
         switch (optionChoice)
         {
             case "Add":
                 Console.WriteLine($"Input task name for Add: ");
-                string taskNameAdd = Helpers.GetValidStringValue();
+                string taskNameAdd = Helpers.GetValidStringValue();                
                 itemService.Add(taskNameAdd);
                 break;
 
@@ -65,11 +87,16 @@ public class MenuProgram
                 Console.WriteLine($"Input task time: ");
                 DateTime timeReminderRc = Helpers.GetValidDateTimeValue();
                 Console.WriteLine("Input repetition type: Daily, Weekly, Monthly or Yearly");
-                string repetitionType = Helpers.GetValidStringValue();
-                
+                string repetitionType = Helpers.GetValidStringValue();;
                 if (RepetitionTypes.VerifyRepetitionType(repetitionType))
                 {
                     itemService.Add(taskNameAddReminderRc, timeReminderRc, repetitionType);
+                }
+                else
+                {
+                    var error = $"Wrong repetition Type {repetitionType}";
+                    _logger.LogError(error);
+                    _consoleLogger.LogError(error);
                 }
                 break;
 
@@ -82,6 +109,7 @@ public class MenuProgram
     {
         IItemService itemService = new ItemService();
 
+        
         switch (operationSelectionOption)
         {
             case "Add":
@@ -120,6 +148,9 @@ public class MenuProgram
                 }
                 else
                 {
+                    var error = $"Wrong answer entered {operationSelectionOption}";
+                    _consoleLogger.LogError(error);
+                    _logger.LogError(error);
                     Console.WriteLine("Mistake!");
                 }
                 
@@ -138,6 +169,11 @@ public class MenuProgram
                 return;
 
             case "Exit":
+                Console.WriteLine("Please choice and input format xml or json");
+                string userSearilization = Helpers.GetValidStringValue().ToLower();
+                UserSeializationSetting.Setting = userSearilization;
+                _logger.WriteLogs();               
+
                 Environment.Exit(0);
                 break;
             default:
