@@ -47,7 +47,6 @@ public class MyCollection<T> : IEnumerable<T>
 
     public int Length => _arr.Length;
 
-    // Define the indexer to allow client code to use [] notation.
     public T this[int i] => _arr[i];
 
     public void Add(T item)
